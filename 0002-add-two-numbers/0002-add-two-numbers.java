@@ -10,39 +10,18 @@
  */
 class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
-        int tens = 0;
+        int carry = 0;
         ListNode previousNode = null;
         ListNode node = null;
         
-        while (true)
+        while (l1 != null || l2 != null || carry > 0)
         {
-            if (tens > 0){}
-            else if (l1 == null && l2 == null)
-            {
-                break;
-            }
+            int l1Val = (l1 != null) ? l1.val : 0;
+            int l2Val = (l2 != null) ? l2.val : 0;
+            int sum = carry + l1Val + l2Val;
+            carry = sum / 10;
             
-            ListNode newNode = new ListNode(tens, null);
-            
-            if (l1 != null)
-            {
-                newNode.val += l1.val;
-            }
-            
-            if(l2 != null)
-            {
-                newNode.val += l2.val;
-            }
-            
-            if (newNode.val >= 10)
-            {
-                tens = 1;
-                newNode.val %= 10;
-            }
-            else 
-            {
-                tens = 0;
-            }
+            ListNode newNode = new ListNode(sum % 10);
             
             if (previousNode == null)
             {
@@ -54,15 +33,8 @@ class Solution {
                 previousNode = newNode;
             }
             
-            if (l1 != null)
-            {
-                l1 = l1.next;
-            }
-            
-            if (l2 != null)
-            {
-                l2 = l2.next;
-            }
+            l1 = (l1 != null) ? l1.next : null;
+            l2 = (l2 != null) ? l2.next : null;
         }
         
         return node;
