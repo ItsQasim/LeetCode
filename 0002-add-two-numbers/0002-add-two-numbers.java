@@ -12,6 +12,8 @@ class Solution {
     public ListNode addTwoNumbers(ListNode l1, ListNode l2) {
         int tens = 0;
         ListNode previousNode = null;
+        ListNode node = null;
+        
         while (true)
         {
             if (tens > 0){}
@@ -20,7 +22,7 @@ class Solution {
                 break;
             }
             
-            ListNode newNode = new ListNode(tens, previousNode);
+            ListNode newNode = new ListNode(tens, null);
             
             if (l1 != null)
             {
@@ -42,7 +44,15 @@ class Solution {
                 tens = 0;
             }
             
-            previousNode = newNode;
+            if (previousNode == null)
+            {
+                node = previousNode = newNode;
+            }
+            else
+            {
+                previousNode.next = newNode;
+                previousNode = newNode;
+            }
             
             if (l1 != null)
             {
@@ -55,25 +65,6 @@ class Solution {
             }
         }
         
-        return reverse(previousNode);
-    }
-    
-    public ListNode reverse(ListNode node)
-    {
-        ListNode previousNode = null;
-        ListNode currentNode = node;
-        ListNode nextNode = null;
-        
-        while (currentNode != null)
-        {
-            nextNode = currentNode.next;
-            
-            currentNode.next = previousNode;
-            
-            previousNode = currentNode;
-            currentNode = nextNode;
-        }
-        
-        return previousNode;
+        return node;
     }
 }
